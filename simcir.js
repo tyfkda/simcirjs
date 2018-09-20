@@ -1389,7 +1389,8 @@ simcir.$ = function() {
       var super_getSize = device.getSize;
       device.getSize = function() {
         var size = super_getSize();
-        return {width: unit * 4, height: size.height};
+        return {width: unit * (data.chipWidth || 4),
+                height: size.height}
       };
       device.$ui.on('dispose', function() {
         $.each($devs, function(i, $dev) {
@@ -1405,6 +1406,20 @@ simcir.$ = function() {
               $(this).find('.simcir-workspace').trigger('dispose');
             });
       });
+
+      if (data.draw) {
+        var super_createUI = device.createUI;
+        device.createUI = function() {
+          super_createUI();
+          var size = device.getSize();
+          var g = $s.graphics(device.$ui);
+          g.attr['class'] = 'simcir-basicset-symbol';
+          data.draw(g,
+                    (size.width - unit) / 2,
+                    (size.height - unit) / 2,
+                    unit, unit);
+        };
+      }
     };
   };
 
