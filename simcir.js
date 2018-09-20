@@ -2631,3 +2631,11 @@ simcir.$ = function() {
   $s.registerDevice('Joint', createJointFactory() );
 
 }(simcir);
+
+if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
+  module.exports = {
+    simcir: simcir
+  };
+} else {
+  window.simcir = simcir;
+}
