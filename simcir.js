@@ -1387,6 +1387,7 @@ simcir.$ = function() {
         });
       });
       var super_getSize = device.getSize;
+      device.halfPitch = data.halfPitch;
       device.getSize = function() {
         var size = super_getSize();
         return {width: unit * 4, height: size.height};
